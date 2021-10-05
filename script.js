@@ -30,6 +30,20 @@ generateEl.addEventListener('click', () => {
   );
 });
 
+clipboardEl.addEventListener('click', () => {
+  const textarea = document.createElement('textarea');
+  const password = resultEl.innerText;
+
+  if (!password) return;
+
+  textarea.value = password;
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand('copy');
+  textarea.remove();
+  alert('Password copied to clipboard!');
+});
+
 // Functions
 function generatePassword(length, lower, upper, number, symbol) {
   let generatedPassword = '';
@@ -48,10 +62,8 @@ function generatePassword(length, lower, upper, number, symbol) {
   for (let i = 0; i < length; i += typesCount) {
     typesArr.forEach((type) => {
       const funcName = Object.keys(type)[0];
-      console.log(funcName);
       generatedPassword += randomFunc[funcName]();
     });
-    console.log(generatedPassword);
   }
   const finalPassword = generatedPassword.slice(0, length);
   return finalPassword;
